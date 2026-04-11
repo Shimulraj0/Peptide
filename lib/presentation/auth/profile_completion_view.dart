@@ -124,7 +124,7 @@ class _ProfileCompletionViewState extends State<ProfileCompletionView> {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.02),
+            color: Colors.black.withValues(alpha: 0.02),
             blurRadius: 20,
             offset: const Offset(0, 10),
           ),
@@ -320,7 +320,7 @@ class _ProfileCompletionViewState extends State<ProfileCompletionView> {
                 width: 2,
               ),
               boxShadow: isSelected ? [
-                BoxShadow(color: const Color(0xFF008B94).withOpacity(0.1), blurRadius: 10)
+                BoxShadow(color: const Color(0xFF008B94).withValues(alpha: 0.1), blurRadius: 10)
               ] : null,
             ),
             child: Icon(
@@ -356,7 +356,7 @@ class _ProfileCompletionViewState extends State<ProfileCompletionView> {
         ),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF48C6EF).withOpacity(0.4),
+            color: const Color(0xFF48C6EF).withValues(alpha: 0.4),
             blurRadius: 20,
             offset: const Offset(0, 10),
           ),

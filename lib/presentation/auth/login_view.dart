@@ -35,7 +35,7 @@ class LoginView extends StatelessWidget {
         borderRadius: BorderRadius.circular(48),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 40,
             offset: const Offset(0, 20),
           ),
@@ -47,7 +47,7 @@ class LoginView extends StatelessWidget {
           // Branding Header
           _buildHeader(),
           const SizedBox(height: 48),
-          
+
           // Email Field
           _buildFieldLabel('EMAIL ADRESS'),
           const SizedBox(height: 8),
@@ -56,7 +56,7 @@ class LoginView extends StatelessWidget {
             icon: Icons.alternate_email,
           ),
           const SizedBox(height: 24),
-          
+
           // Password Field
           _buildFieldLabel(
             'PASSWORD',
@@ -79,11 +79,11 @@ class LoginView extends StatelessWidget {
             isPassword: true,
           ),
           const SizedBox(height: 40),
-          
+
           // Login Button
           _buildLoginButton(context),
           const SizedBox(height: 32),
-          
+
           // Footer
           Text(
             "Don't have access yet?",
@@ -171,7 +171,7 @@ class LoginView extends StatelessWidget {
             letterSpacing: 0.5,
           ),
         ),
-        if (extraAction != null) extraAction,
+        ?extraAction,
       ],
     );
   }
@@ -187,15 +187,12 @@ class LoginView extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.03),
+            color: Colors.black.withValues(alpha: 0.03),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
         ],
-        border: Border.all(
-          color: const Color(0xFFF3F4F6),
-          width: 1,
-        ),
+        border: Border.all(color: const Color(0xFFF3F4F6), width: 1),
       ),
       child: TextField(
         obscureText: isPassword,
@@ -205,11 +202,7 @@ class LoginView extends StatelessWidget {
             color: const Color(0xFFD1D5DB),
             fontSize: 15,
           ),
-          prefixIcon: Icon(
-            icon,
-            color: const Color(0xFFD1D5DB),
-            size: 20,
-          ),
+          prefixIcon: Icon(icon, color: const Color(0xFFD1D5DB), size: 20),
           border: InputBorder.none,
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 16,
@@ -227,16 +220,13 @@ class LoginView extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
         gradient: const LinearGradient(
-          colors: [
-            Color(0xFF008B94),
-            Color(0xFF48C6EF),
-          ],
+          colors: [Color(0xFF008B94), Color(0xFF48C6EF)],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
         ),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF48C6EF).withOpacity(0.4),
+            color: const Color(0xFF48C6EF).withValues(alpha: 0.4),
             blurRadius: 20,
             offset: const Offset(0, 10),
           ),

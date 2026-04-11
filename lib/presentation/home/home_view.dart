@@ -106,7 +106,7 @@ class _HomeViewState extends State<HomeView> {
             borderRadius: BorderRadius.circular(36),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.04),
+                color: Colors.black.withValues(alpha: 0.04),
                 blurRadius: 30,
                 offset: const Offset(0, 15),
               ),
@@ -209,7 +209,7 @@ class _HomeViewState extends State<HomeView> {
           ),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFF00E5FF).withOpacity(0.3),
+              color: const Color(0xFF00E5FF).withValues(alpha: 0.3),
               blurRadius: 15,
               offset: const Offset(0, 8),
             ),
@@ -345,7 +345,7 @@ class _HomeViewState extends State<HomeView> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 10, offset: const Offset(0, 4))],
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 10, offset: const Offset(0, 4))],
         border: Border.all(color: const Color(0xFFF3F4F6)),
       ),
       child: Column(
@@ -408,7 +408,7 @@ class _HomeViewState extends State<HomeView> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.01), blurRadius: 10, offset: const Offset(0, 4))],
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.01), blurRadius: 10, offset: const Offset(0, 4))],
         border: Border.all(color: const Color(0xFFF9FAFB)),
       ),
       child: Row(

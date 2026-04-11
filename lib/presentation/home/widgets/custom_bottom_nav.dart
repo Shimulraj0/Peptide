@@ -56,7 +56,7 @@ class CustomBottomNavBar extends StatelessWidget {
           ) : null,
           boxShadow: isSelected ? [
             BoxShadow(
-              color: const Color(0xFF48C6EF).withOpacity(0.3),
+              color: const Color(0xFF48C6EF).withValues(alpha: 0.3),
               blurRadius: 15,
               offset: const Offset(0, 8),
             ),
@@ -99,7 +99,7 @@ class CustomBottomNavBar extends StatelessWidget {
           color: isSelected ? const Color(0xFFE0F7FA) : Colors.transparent,
           boxShadow: isSelected ? [
             BoxShadow(
-              color: const Color(0xFF008B94).withOpacity(0.1),
+              color: const Color(0xFF008B94).withValues(alpha: 0.1),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
