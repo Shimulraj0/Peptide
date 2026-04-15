@@ -98,12 +98,15 @@ class NextLogCard extends StatelessWidget {
   final String location;
   final String dosage;
 
+  final VoidCallback? onTap;
+
   const NextLogCard({
     super.key,
     required this.peptide,
     required this.time,
     required this.location,
     required this.dosage,
+    this.onTap,
   });
 
   @override
@@ -157,27 +160,30 @@ class NextLogCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 32),
-          Container(
-            width: double.infinity,
-            height: 56,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(9999),
-              boxShadow: const [
-                BoxShadow(
-                  color: Color(0x19000000),
-                  blurRadius: 20,
-                  offset: Offset(0, 8),
-                )
-              ],
-            ),
-            child: Center(
-              child: Text(
-                'Log entry',
-                style: GoogleFonts.manrope(
-                  color: const Color(0xFF0058BC),
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
+          GestureDetector(
+            onTap: onTap,
+            child: Container(
+              width: double.infinity,
+              height: 56,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(9999),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0x19000000),
+                    blurRadius: 20,
+                    offset: Offset(0, 8),
+                  )
+                ],
+              ),
+              child: Center(
+                child: Text(
+                  'Log entry',
+                  style: GoogleFonts.manrope(
+                    color: const Color(0xFF0058BC),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
             ),

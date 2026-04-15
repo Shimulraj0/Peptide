@@ -51,9 +51,27 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
         PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) => const ProfileSetupScreen(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(opacity: animation, child: child);
+            const begin = Offset(0.05, 0.0); // Subtle slide from right
+            const end = Offset.zero;
+            const curve = Curves.easeOutQuart;
+
+            final offsetAnimation = animation.drive(
+              Tween(begin: begin, end: end).chain(CurveTween(curve: curve)),
+            );
+            
+            final fadeAnimation = animation.drive(
+              CurveTween(curve: Curves.easeIn),
+            );
+
+            return FadeTransition(
+              opacity: fadeAnimation,
+              child: SlideTransition(
+                position: offsetAnimation,
+                child: child,
+              ),
+            );
           },
-          transitionDuration: const Duration(milliseconds: 800),
+          transitionDuration: const Duration(milliseconds: 500),
         ),
         (route) => false,
       );

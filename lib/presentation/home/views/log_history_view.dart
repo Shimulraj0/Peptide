@@ -17,7 +17,12 @@ class LogHistoryView extends ConsumerWidget {
         ),
         Expanded(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(24, 24, 24, 128),
+            padding: const EdgeInsets.only(
+              top: 24,
+              left: 24,
+              right: 24,
+              bottom: 128,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -31,6 +36,7 @@ class LogHistoryView extends ConsumerWidget {
                       time: '08:00 PM',
                       dotColor: Color(0xFF0058BC),
                       iconBgColor: Color(0x190058BC),
+                      icon: Icons.colorize_outlined,
                     ),
                     LogTimelineCard(
                       peptide: 'CJC-1295',
@@ -39,10 +45,10 @@ class LogHistoryView extends ConsumerWidget {
                       time: '07:30 AM',
                       dotColor: Color(0x660058BC),
                       iconBgColor: Color(0x19006687),
+                      icon: Icons.biotech_outlined,
                     ),
                   ],
                 ),
-                const SizedBox(height: 32),
                 TimelineSection(
                   date: 'Yesterday',
                   children: const [
@@ -53,10 +59,10 @@ class LogHistoryView extends ConsumerWidget {
                       time: '09:15 PM',
                       dotColor: Color(0xFFC1C6D7),
                       iconBgColor: Color(0xFFE8E8ED),
+                      icon: Icons.opacity_outlined,
                     ),
                   ],
                 ),
-                const SizedBox(height: 32),
                 TimelineSection(
                   date: 'Oct 24, 2023',
                   isLast: true,
@@ -68,7 +74,7 @@ class LogHistoryView extends ConsumerWidget {
                       time: '08:45 PM',
                       dotColor: Color(0xFFC1C6D7),
                       iconBgColor: Color(0xFFE8E8ED),
-                      hasLineBelow: false,
+                      icon: Icons.science_outlined,
                     ),
                   ],
                 ),

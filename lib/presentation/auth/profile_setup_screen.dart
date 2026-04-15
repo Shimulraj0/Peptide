@@ -258,6 +258,9 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
   }
 
   Widget _buildGenderToggle(String selectedGender) {
+    final genders = ['Male', 'Female', 'Other'];
+    final selectedIndex = genders.indexOf(selectedGender);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -276,11 +279,36 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
             color: const Color(0xFFE8E8ED),
             borderRadius: BorderRadius.circular(32),
           ),
-          child: Row(
+          child: Stack(
             children: [
-              _buildGenderButton('Male', selectedGender),
-              _buildGenderButton('Female', selectedGender),
-              _buildGenderButton('Other', selectedGender),
+              AnimatedAlign(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+                alignment: Alignment(
+                  selectedIndex == -1 ? -1.0 : (selectedIndex / (genders.length - 1)) * 2 - 1,
+                  0,
+                ),
+                child: FractionallySizedBox(
+                  widthFactor: 1 / genders.length,
+                  child: Container(
+                    height: 46,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(28),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color(0x0A1A1C1F),
+                          blurRadius: 20,
+                          offset: Offset(0, 4),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Row(
+                children: genders.map((g) => _buildGenderButton(g, selectedGender)).toList(),
+              ),
             ],
           ),
         ),
@@ -293,28 +321,19 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
     return Expanded(
       child: GestureDetector(
         onTap: () => ref.read(profileProvider.notifier).updateGender(gender),
+        behavior: HitTestBehavior.opaque,
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 12),
-          decoration: BoxDecoration(
-            color: isSelected ? Colors.white : Colors.transparent,
-            borderRadius: BorderRadius.circular(30),
-            boxShadow: isSelected
-                ? [
-                    const BoxShadow(
-                      color: Color(0x0A1A1C1F),
-                      blurRadius: 40,
-                      offset: Offset(0, 12),
-                    )
-                  ]
-                : null,
-          ),
-          child: Text(
-            gender,
-            textAlign: TextAlign.center,
-            style: GoogleFonts.inter(
-              color: isSelected ? const Color(0xFF0058BC) : const Color(0xFF414755),
-              fontSize: 14,
-              fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+          padding: const EdgeInsets.symmetric(vertical: 14),
+          color: Colors.transparent,
+          child: Center(
+            child: AnimatedDefaultTextStyle(
+              duration: const Duration(milliseconds: 300),
+              style: GoogleFonts.inter(
+                color: isSelected ? const Color(0xFF0058BC) : const Color(0xFF414755),
+                fontSize: 14,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+              ),
+              child: Text(gender),
             ),
           ),
         ),

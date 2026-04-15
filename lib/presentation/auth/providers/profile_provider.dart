@@ -7,6 +7,7 @@ class UserProfile {
   final String gender;
   final double height;
   final double weight;
+  final String avatarUrl;
 
   UserProfile({
     required this.fullName,
@@ -15,6 +16,7 @@ class UserProfile {
     required this.gender,
     required this.height,
     required this.weight,
+    required this.avatarUrl,
   });
 
   UserProfile copyWith({
@@ -24,6 +26,7 @@ class UserProfile {
     String? gender,
     double? height,
     double? weight,
+    String? avatarUrl,
   }) {
     return UserProfile(
       fullName: fullName ?? this.fullName,
@@ -32,6 +35,7 @@ class UserProfile {
       gender: gender ?? this.gender,
       height: height ?? this.height,
       weight: weight ?? this.weight,
+      avatarUrl: avatarUrl ?? this.avatarUrl,
     );
   }
 }
@@ -43,6 +47,7 @@ class ProfileNotifier extends StateNotifier<UserProfile> {
     gender: 'Male',
     height: 180,
     weight: 78.5,
+    avatarUrl: 'https://i.pravatar.cc/300?img=12',
   ));
 
   void updateFullName(String name) => state = state.copyWith(fullName: name);

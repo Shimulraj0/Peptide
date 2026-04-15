@@ -6,7 +6,10 @@ import 'widgets/custom_bottom_nav.dart';
 import 'providers/navigation_provider.dart';
 import '../auth/providers/profile_provider.dart';
 import 'views/log_history_view.dart';
+import 'log_entry_screen.dart';
+import 'views/inventory_view.dart';
 import 'peptide_library_screen.dart';
+import 'views/settings_view.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -26,7 +29,7 @@ class HomeScreen extends ConsumerWidget {
             if (currentIndex == 0)
               DashboardHeader(
                 userName: profile.fullName,
-                avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=${profile.fullName}',
+                avatarUrl: profile.avatarUrl,
               ),
             
             Expanded(
@@ -35,8 +38,8 @@ class HomeScreen extends ConsumerWidget {
                 children: [
                   _DashboardView(profile: profile),
                   const LogHistoryView(),
-                  _PlaceholderView(title: 'Peptide Inventory'),
-                  _PlaceholderView(title: 'App Settings'),
+                  const InventoryView(),
+                  const SettingsView(),
                 ],
               ),
             ),
@@ -63,11 +66,14 @@ class _DashboardView extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const NextLogCard(
+          NextLogCard(
             peptide: 'BPC-157',
             time: 'Today, 8:00 PM',
             location: 'Abdomen',
             dosage: '250mcg',
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const LogEntryScreen()),
+            ),
           ),
           const SizedBox(height: 34),
           const WeightMetricCard(
@@ -173,33 +179,3 @@ class _SectionHeader extends StatelessWidget {
   }
 }
 
-class _PlaceholderView extends StatelessWidget {
-  final String title;
-  const _PlaceholderView({required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.construction_rounded, size: 64, color: Color(0xFFC1C6D7)),
-          const SizedBox(height: 16),
-          Text(
-            title,
-            style: GoogleFonts.manrope(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: const Color(0xFF1A1C1F),
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'This feature is coming soon to your clinical suite.',
-            style: GoogleFonts.inter(color: const Color(0xFF717786)),
-          ),
-        ],
-      ),
-    );
-  }
-}
