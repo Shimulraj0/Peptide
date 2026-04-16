@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../auth/login_screen.dart';
 import '../../auth/providers/profile_provider.dart';
+import 'leave_review_view.dart';
+import 'notification_settings_view.dart';
+import 'personal_details_view.dart';
+import 'privacy_policy_view.dart';
+import 'security_view.dart';
+import 'terms_of_service_view.dart';
+import '../../../utils/page_transitions.dart';
 
 class SettingsView extends ConsumerWidget {
   const SettingsView({super.key});
@@ -10,40 +18,69 @@ class SettingsView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final profile = ref.watch(profileProvider);
 
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+    return Scaffold(
+      backgroundColor: const Color(0xFFF9F9FE),
+      body: Stack(
         children: [
-          _buildHeader(),
-          Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          // Background decoration
+          Positioned(
+            right: -100,
+            top: -100,
+            child: Container(
+              width: 300,
+              height: 300,
+              decoration: const BoxDecoration(
+                color: Color(0x080058BC),
+                shape: BoxShape.circle,
+              ),
+            ),
+          ),
+          
+          SafeArea(
+            child: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              physics: const BouncingScrollPhysics(),
               children: [
+                _buildHeader(),
+                const SizedBox(height: 24),
                 _buildProfileCard(profile),
-                const SizedBox(height: 32),
                 
+                const SizedBox(height: 48),
                 _buildSectionHeader('ACCOUNT'),
                 const SizedBox(height: 16),
                 _buildSettingItem(
                   icon: Icons.person_outline,
                   title: 'Personal Details',
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      SmoothPageRoute(child: const PersonalDetailsView()),
+                    );
+                  },
                 ),
                 _buildSettingItem(
                   icon: Icons.lock_outline,
-                  title: 'Security and Password',
-                  onTap: () {},
+                  title: 'Security',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      SmoothPageRoute(child: const SecurityView()),
+                    );
+                  },
                 ),
-                
+
                 const SizedBox(height: 32),
                 _buildSectionHeader('NOTIFICATIONS'),
                 const SizedBox(height: 16),
                 _buildSettingItem(
                   icon: Icons.notifications_none_outlined,
                   title: 'Notifications settings',
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      SmoothPageRoute(child: const NotificationSettingsView()),
+                    );
+                  },
                 ),
 
                 const SizedBox(height: 32),
@@ -58,7 +95,12 @@ class SettingsView extends ConsumerWidget {
                 _buildSettingItem(
                   icon: Icons.star_outline,
                   title: 'Leave a Review',
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      SmoothPageRoute(child: const LeaveReviewView()),
+                    );
+                  },
                 ),
 
                 const SizedBox(height: 32),
@@ -68,21 +110,31 @@ class SettingsView extends ConsumerWidget {
                   icon: Icons.description_outlined,
                   title: 'Terms of Service',
                   trailingIcon: Icons.open_in_new,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      SmoothPageRoute(child: const TermsOfServiceView()),
+                    );
+                  },
                 ),
                 _buildSettingItem(
                   icon: Icons.privacy_tip_outlined,
                   title: 'Privacy Policy',
                   trailingIcon: Icons.open_in_new,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      SmoothPageRoute(child: const PrivacyPolicyView()),
+                    );
+                  },
                 ),
 
                 const SizedBox(height: 64),
                 _buildAppVersion(),
                 const SizedBox(height: 24),
-                _buildLogoutButton(context),
+                _buildLogoutButton(context, ref),
                 const SizedBox(height: 12),
-                _buildDeleteAccountButton(),
+                _buildDeleteAccountButton(context, ref),
                 const SizedBox(height: 128), // Space for bottom nav
               ],
             ),
@@ -95,7 +147,7 @@ class SettingsView extends ConsumerWidget {
   Widget _buildHeader() {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      padding: const EdgeInsets.symmetric(vertical: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -148,7 +200,6 @@ class SettingsView extends ConsumerWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          // Decorative background circle
           Positioned(
             left: -39,
             top: -39,
@@ -161,11 +212,9 @@ class SettingsView extends ConsumerWidget {
               ),
             ),
           ),
-          
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Avatar
               Stack(
                 children: [
                   Container(
@@ -178,7 +227,7 @@ class SettingsView extends ConsumerWidget {
                     ),
                     child: Container(
                       decoration: ShapeDecoration(
-                        shape: CircleBorder(
+                        shape: const CircleBorder(
                           side: BorderSide(width: 4, color: Colors.white),
                         ),
                         image: DecorationImage(
@@ -347,7 +396,7 @@ class SettingsView extends ConsumerWidget {
     );
   }
 
-  Widget _buildLogoutButton(BuildContext context) {
+  Widget _buildLogoutButton(BuildContext context, WidgetRef ref) {
     return Container(
       width: double.infinity,
       height: 64,
@@ -371,7 +420,13 @@ class SettingsView extends ConsumerWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            ref.read(profileProvider.notifier).reset();
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (_) => const LoginScreen()),
+              (route) => false,
+            );
+          },
           borderRadius: BorderRadius.circular(32),
           child: Center(
             child: Row(
@@ -395,7 +450,7 @@ class SettingsView extends ConsumerWidget {
     );
   }
 
-  Widget _buildDeleteAccountButton() {
+  Widget _buildDeleteAccountButton(BuildContext context, WidgetRef ref) {
     return Container(
       width: double.infinity,
       height: 52,
@@ -408,7 +463,7 @@ class SettingsView extends ConsumerWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () {},
+          onTap: () => _showDeleteAccountDialog(context, ref),
           borderRadius: BorderRadius.circular(32),
           child: Center(
             child: Text(
@@ -419,6 +474,106 @@ class SettingsView extends ConsumerWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showDeleteAccountDialog(BuildContext context, WidgetRef ref) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
+        child: Padding(
+          padding: const EdgeInsets.all(32),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 64,
+                height: 64,
+                decoration: const ShapeDecoration(
+                  color: Color(0x19FFDAD6),
+                  shape: CircleBorder(),
+                ),
+                child: const Icon(Icons.delete_forever_rounded, color: Color(0xFFBA1A1A), size: 32),
+              ),
+              const SizedBox(height: 24),
+              Text(
+                'Delete My Account?',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.manrope(
+                  color: const Color(0xFF1A1C1F),
+                  fontSize: 24,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: -0.60,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'This action is irreversible. All clinical tracking, peptide logs, and profile data will be permanently purged.',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.inter(
+                  color: const Color(0xFF414755),
+                  fontSize: 14,
+                  height: 1.50,
+                ),
+              ),
+              const SizedBox(height: 32),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      style: TextButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                      ),
+                      child: Text(
+                        'Cancel',
+                        style: GoogleFonts.inter(
+                          color: const Color(0xFF414755),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Reset profile data
+                        ref.read(profileProvider.notifier).reset();
+                        
+                        // Close dialog and push back to login
+                        Navigator.pop(context); // Close dialog
+                        Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (_) => const LoginScreen()),
+                          (route) => false,
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFBA1A1A),
+                        foregroundColor: Colors.white,
+                        elevation: 0,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                      ),
+                      child: Text(
+                        'Delete',
+                        style: GoogleFonts.manrope(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

@@ -56,6 +56,17 @@ class ProfileNotifier extends StateNotifier<UserProfile> {
   void updateHeight(double height) => state = state.copyWith(height: height);
   void updateWeight(double weight) => state = state.copyWith(weight: weight);
   void updateDOB(String dob) => state = state.copyWith(dob: dob);
+
+  void reset() {
+    state = UserProfile(
+      fullName: 'Dr. Julian Pierce',
+      phoneNumber: '+1 (555) 000-0000',
+      gender: 'Male',
+      height: 180,
+      weight: 78.5,
+      avatarUrl: 'https://i.pravatar.cc/300?img=12',
+    );
+  }
 }
 
 final profileProvider = StateNotifierProvider<ProfileNotifier, UserProfile>((ref) {

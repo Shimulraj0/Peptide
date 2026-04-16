@@ -229,7 +229,7 @@ class RegisterScreen extends StatelessWidget {
                         children: [
                           Expanded(
                             child: _SocialButton(
-                              icon: Icons.g_mobiledata,
+                              imagePath: 'assets/google.png',
                               label: 'Google',
                               onPressed: () {},
                               backgroundColor: const Color(0xFFF3F3F8),
@@ -329,14 +329,16 @@ class RegisterScreen extends StatelessWidget {
 }
 
 class _SocialButton extends StatelessWidget {
-  final IconData icon;
+  final IconData? icon;
+  final String? imagePath;
   final String label;
   final VoidCallback onPressed;
   final Color backgroundColor;
   final Color textColor;
 
   const _SocialButton({
-    required this.icon,
+    this.icon,
+    this.imagePath,
     required this.label,
     required this.onPressed,
     required this.backgroundColor,
@@ -358,7 +360,10 @@ class _SocialButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: textColor, size: 24),
+            if (imagePath != null)
+              Image.asset(imagePath!, width: 24, height: 24)
+            else if (icon != null)
+              Icon(icon!, color: textColor, size: 24),
             const SizedBox(width: 12),
             Text(
               label,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'views/add_peptide_success_view.dart';
 
 class AddPeptideScreen extends StatefulWidget {
   const AddPeptideScreen({super.key});
@@ -364,10 +365,18 @@ class _AddPeptideScreenState extends State<AddPeptideScreen> {
       ),
       child: ElevatedButton(
         onPressed: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Peptide saved successfully')),
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddPeptideSuccessView(
+                peptideName: nameController.text.isNotEmpty ? nameController.text : 'BPC-157 Argentum',
+                amount: amountController.text.isNotEmpty ? amountController.text : '5.0',
+                amountUnit: selectedUnit,
+                unitType: selectedUnit == 'Vials' ? 'Vial / Lyophilized' : 'Reconstituted Solution',
+                expirationDate: expirationDate ?? 'October 24, 2025',
+              ),
+            ),
           );
-          Navigator.pop(context);
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.transparent,
